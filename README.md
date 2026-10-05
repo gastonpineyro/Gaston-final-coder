@@ -41,8 +41,8 @@ Blog web hecho con Django. Cualquier visitante puede leer y buscar publicaciones
 
 1. Cloná el repositorio y entrá a la carpeta:
    ```bash
-   git clone https://github.com/gastonpineyro/Gaston-Coder-final.git
-   cd Gaston-Coder-final
+   git clone https://github.com/gastonpineyro/Gaston-final-coder.git
+   cd Gaston-final-coder
    ```
 
 2. Creá y activá un entorno virtual:
