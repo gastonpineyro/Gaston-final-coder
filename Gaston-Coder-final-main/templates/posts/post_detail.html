@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ post.titulo }} | Blog Web{% endblock %}
+{% block content %}
+<article class="mx-auto" style="max-width: 760px;">
+  <h1>{{ post.titulo }}</h1>
+  {% if post.subtitulo %}<p class="lead text-muted">{{ post.subtitulo }}</p>{% endif %}
+  <p class="small text-muted">
+    Por <strong>{{ post.autor.username }}</strong> · {{ post.fecha_creacion|date:"d/m/Y H:i" }}
+    {% if post.fecha_actualizacion|date:"YmdHi" != post.fecha_creacion|date:"YmdHi" %} · editado {{ post.fecha_actualizacion|date:"d/m/Y H:i" }}{% endif %}
+  </p>
+
+  {% if post.imagen %}
+    <img src="{{ post.imagen.url }}" class="img-fluid rounded mb-4" alt="{{ post.titulo }}">
+  {% endif %}
+
+  <div class="post-contenido mb-4">{{ post.contenido|linebreaks }}</div>
+
+  <div class="d-flex gap-2">
+    <a href="{% url 'post_list' %}" class="btn btn-outline-secondary">Volver</a>
+    {% if user == post.autor %}
+      <a href="{% url 'post_update' post.pk %}" class="btn btn-warning">Editar</a>
+      <a href="{% url 'post_delete' post.pk %}" class="btn btn-danger">Eliminar</a>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}

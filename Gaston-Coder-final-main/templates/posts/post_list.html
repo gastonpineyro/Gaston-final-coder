@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{% if query %}Búsqueda: {{ query }}{% else %}Inicio{% endif %} | Blog Web{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 mb-0">
+    {% if query %}Resultados para "{{ query }}"{% else %}Últimas publicaciones{% endif %}
+  </h1>
+  {% if user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'post_create' %}">+ Nuevo post</a>
+  {% endif %}
+</div>
+
+{% if posts %}
+  <div class="row g-4">
+    {% for post in posts %}
+      <div class="col-md-6 col-lg-4">
+        <article class="card h-100 shadow-sm">
+          {% if post.imagen %}
+            <img src="{{ post.imagen.url }}" class="card-img-top post-thumb" alt="{{ post.titulo }}">
+          {% else %}
+            <div class="post-thumb post-thumb--vacia">Sin imagen</div>
+          {% endif %}
+          <div class="card-body d-flex flex-column">
+            <h2 class="h5 card-title">{{ post.titulo }}</h2>
+            {% if post.subtitulo %}<p class="text-muted small mb-2">{{ post.subtitulo }}</p>{% endif %}
+            <p class="card-text">{{ post.contenido|truncatewords:25 }}</p>
+            <p class="small text-muted mt-auto mb-2">Por {{ post.autor.username }} · {{ post.fecha_creacion|date:"d/m/Y" }}</p>
+            <a href="{{ post.get_absolute_url }}" class="btn btn-outline-primary btn-sm">Leer más</a>
+          </div>
+        </article>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if is_paginated %}
+    <nav class="mt-4" aria-label="Paginación">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query|urlencode }}{% endif %}">Anterior</a></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query|urlencode }}{% endif %}">Siguiente</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% else %}
+  <div class="alert alert-info">
+    {% if query %}
+      No se encontraron posts que coincidan con "{{ query }}". <a href="{% url 'post_list' %}">Ver todos los posts</a>.
+    {% else %}
+      Todavía no hay publicaciones.
+      {% if user.is_authenticated %}<a href="{% url 'post_create' %}">¡Creá la primera!</a>{% else %}<a href="{% url 'registro' %}">Registrate</a> para crear la primera.{% endif %}
+    {% endif %}
+  </div>
+{% endif %}
+{% endblock %}

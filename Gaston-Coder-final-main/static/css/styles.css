@@ -1,0 +1,39 @@
+.post-thumb {
+  height: 200px;
+  object-fit: cover;
+}
+
+.post-thumb--vacia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e9ecef;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.post-contenido {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar--vacio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d6efd;
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.navbar .btn-link.nav-link {
+  border: 0;
+}

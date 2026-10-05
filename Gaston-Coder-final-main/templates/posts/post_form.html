@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{% if object %}Editar post{% else %}Nuevo post{% endif %} | Blog Web{% endblock %}
+{% block content %}
+<div class="mx-auto" style="max-width: 760px;">
+  <h1 class="h3 mb-4">{% if object %}Editar "{{ object.titulo }}"{% else %}Nuevo post{% endif %}</h1>
+  <form method="post" enctype="multipart/form-data" class="card card-body shadow-sm">
+    {% csrf_token %}
+    {% include "form_fields.html" %}
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{% if object %}{{ object.get_absolute_url }}{% else %}{% url 'post_list' %}{% endif %}" class="btn btn-outline-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

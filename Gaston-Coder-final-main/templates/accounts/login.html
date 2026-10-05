@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Iniciar sesión | Blog Web{% endblock %}
+{% block content %}
+<div class="mx-auto" style="max-width: 420px;">
+  <h1 class="h3 mb-4">Iniciar sesión</h1>
+  {% if request.GET.next %}
+    <div class="alert alert-warning">Tenés que iniciar sesión para acceder a esa página.</div>
+  {% endif %}
+  <form method="post" class="card card-body shadow-sm">
+    {% csrf_token %}
+    {% include "form_fields.html" %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+  </form>
+  <p class="mt-3 text-center">¿No tenés cuenta? <a href="{% url 'registro' %}">Registrate</a></p>
+</div>
+{% endblock %}
